@@ -1,0 +1,36 @@
+// Script by : Nanatchy
+// Porject : Metroid Like
+
+using System;
+using UnityEngine;
+
+    #ROOTNAMESPACEBEGIN#
+public class #SCRIPTNAME# : MonoBehaviour
+{
+    #region Attributs
+
+
+
+    #endregion
+
+    #region Methods
+
+
+
+    #endregion
+
+    #region Behaviors
+
+	void Start()
+    {
+        #NOTRIM#
+    }
+
+    void Update()
+    {
+        #NOTRIM#
+    }
+
+	#endregion
+}
+#ROOTNAMESPACEEND#
