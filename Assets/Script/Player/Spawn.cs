@@ -14,7 +14,6 @@ namespace Script.Player
 		public Vector3 CheckPoint { get; private set; }
 		
 		[SerializeField] private string checkPoint;
-		[SerializeField] private float space;
 		
 		#endregion
 
@@ -27,7 +26,7 @@ namespace Script.Player
 
 		private void Start()
 		{
-        
+			CheckPoint = player.transform.position;
 		}
 
 		private void Update()
@@ -40,10 +39,6 @@ namespace Script.Player
 			if (other.CompareTag(checkPoint))
 			{
 				CheckPoint = player.transform.position;
-				
-				var point = CheckPoint;
-				point.x = CheckPoint.x + space;
-				CheckPoint = point;
 			}
 		}
     

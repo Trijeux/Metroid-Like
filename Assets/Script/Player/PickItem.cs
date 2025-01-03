@@ -10,6 +10,7 @@ namespace Script.Player
 		#region Attributs
 
 		[SerializeField] private string gem;
+		[SerializeField] private string redGem;
 		[SerializeField] private int itemCount;
 
 		#endregion
@@ -37,6 +38,11 @@ namespace Script.Player
 			if (other.CompareTag(gem))
 			{
 				itemCount++;
+			}
+			
+			if (other.CompareTag(redGem))
+			{
+				itemCount =+ 10;
 			}
 		}
 
