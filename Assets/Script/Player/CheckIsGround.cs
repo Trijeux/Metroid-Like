@@ -11,12 +11,13 @@ namespace Script.Player
 
 		[SerializeField] private new string tag;
 
+		public bool IsGround { get; private set; }
+		
 		#endregion
 
 		#region Methods
 
-		public bool IsGround { get; private set; }
-
+		
 		#endregion
 
 		#region Behaviors

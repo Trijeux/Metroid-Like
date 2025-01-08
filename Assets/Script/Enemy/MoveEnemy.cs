@@ -16,9 +16,12 @@ namespace Script.Enemy
 		[SerializeField] private string killerZone;
 		[SerializeField] private float speed = -5f;
 		
+		public bool IsDead { get; private set; }
+		
 		private bool _isFacingLeft = true;
+
 		
-		
+
 		#endregion
 
 		#region Methods
@@ -59,6 +62,7 @@ namespace Script.Enemy
 
 			if (other.CompareTag(killerZone))
 			{
+				IsDead = true;
 				Destroy(gameObject);
 			}
 		}

@@ -4,6 +4,8 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
+using UnityEngine.UIElements;
 
 namespace Script.Player
 {
@@ -11,22 +13,34 @@ namespace Script.Player
     {
         #region Attributs
 
+        [SerializeField] private GameObject heart1;
+        [SerializeField] private GameObject heart2;
+        [SerializeField] private GameObject heart3;
+        [SerializeField] private GameObject uiInGame;
+        [SerializeField] private GameObject uiGameOver;
+        [SerializeField] private GameObject textGameOver;
+        [SerializeField] private GameObject textEndLevel;
+        
+        private Rigidbody2D _rb;
+        
         [SerializeField] private CheckIsGround checkIsGround;
         [SerializeField] private Spawn spawn;
         [SerializeField] private Dead dead;
         [SerializeField] private KillEnemy killEnemy;
         [SerializeField] private FinishLevel finishLevel;
-        
-        private Rigidbody2D _rb;
-        
+
         [SerializeField] private float speed = 5f;
         [SerializeField] private float powerJump = 5f;
         [SerializeField] private bool isDead;
         [SerializeField] private bool isEnd;
+        [SerializeField] private int life = 3;
+        [SerializeField] private bool isNoLife;
+        [SerializeField] private bool isPause;
 
         private float _upDownInput;
         private float _leftRightInput;
         private bool _jumpInput;
+        private bool  _pauseInputRelease;
         private bool _isFall = false;
 
         #endregion
@@ -48,6 +62,26 @@ namespace Script.Player
             _jumpInput = value.isPressed;
         }
 
+        private void OnPause(InputValue value)
+        {
+            switch (value.isPressed)
+            {
+                case true when !isPause && !_pauseInputRelease:
+                    _pauseInputRelease = true;
+                    isPause = true;
+                    Time.timeScale = 0;
+                    break;
+                case true when isPause && !_pauseInputRelease:
+                    _pauseInputRelease = true;
+                    isPause = false;
+                    Time.timeScale = 1;
+                    break;
+                case false:
+                    _pauseInputRelease = false;
+                    break;
+            }
+        }
+        
         #endregion
 
         #region Behaviors
@@ -60,14 +94,67 @@ namespace Script.Player
         private void Update()
         {
             isDead = dead.isDead;
+            
+            if (isDead)
+            {
+                life--;
+                switch (life)
+                {
+                    case 3:
+                        heart3.SetActive(true);
+                        heart2.SetActive(true);
+                        heart1.SetActive(true);
+                        break;
+                    case 2:
+                        heart3.SetActive(false);
+                        heart2.SetActive(true);
+                        heart1.SetActive(true);
+                        break;
+                    case 1:
+                        heart3.SetActive(false);
+                        heart2.SetActive(false);
+                        heart1.SetActive(true);
+                        break;
+                    case 0:
+                        heart3.SetActive(false);
+                        heart2.SetActive(false);
+                        heart1.SetActive(false);
+                        break;
+                }
+            }
+            
             if (isDead)
             {
                 transform.position = spawn.CheckPoint;
                 isDead = false;
-                dead.isDead = false; 
+                dead.isDead = false;
             }
 
-            isEnd = finishLevel.IsFinish;
+            if (life <= 0)
+            {
+                isEnd = true;
+                isNoLife = true;
+            }
+            else
+            {
+                isEnd = finishLevel.IsFinish;
+            }
+
+            if (isEnd)
+            {
+                uiInGame.SetActive(false);
+                uiGameOver.SetActive(true);
+                if (isNoLife)
+                {
+                    textGameOver.SetActive(true);
+                    textEndLevel.SetActive(false);
+                }
+                else
+                {
+                    textGameOver.SetActive(false);
+                    textEndLevel.SetActive(true);
+                }
+            }
         }
 
         private void FixedUpdate()

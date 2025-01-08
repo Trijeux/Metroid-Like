@@ -1,7 +1,9 @@
 // Script by : Nanatchy
 // Porject : Metroid Like
 
+using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Script.Player
 {
@@ -9,6 +11,9 @@ namespace Script.Player
 	{
 		#region Attributs
 
+		[SerializeField] private TextMeshProUGUI gemInGame;
+		[SerializeField] private TextMeshProUGUI gemGameOver;
+		
 		[SerializeField] private string gem;
 		[SerializeField] private string redGem;
 		[SerializeField] private int itemCount;
@@ -30,7 +35,8 @@ namespace Script.Player
 
 		private void Update()
 		{
-        
+			gemInGame.text = itemCount.ToString();
+			gemGameOver.text = itemCount.ToString();
 		}
 
 		private void OnTriggerEnter2D(Collider2D other)
@@ -42,7 +48,7 @@ namespace Script.Player
 			
 			if (other.CompareTag(redGem))
 			{
-				itemCount =+ 10;
+				itemCount += 10;
 			}
 		}
 

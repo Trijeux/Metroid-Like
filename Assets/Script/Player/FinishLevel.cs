@@ -10,9 +10,8 @@ public class FinishLevel : MonoBehaviour
     #region Attributs
 
     [SerializeField] private string finish;
-	[SerializeField] private bool isFinish = false;
-
-	public bool IsFinish => isFinish;
+    
+	public bool IsFinish { get; private set; }
 
 	#endregion
 
@@ -38,7 +37,7 @@ public class FinishLevel : MonoBehaviour
     {
 	    if (other.CompareTag(finish))
 	    {
-		    isFinish = true;
+		    IsFinish = true;
 	    }
     }
     
