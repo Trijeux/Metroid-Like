@@ -12,8 +12,9 @@ namespace Editor.Player
         private bool _showStats = true;
 
         private bool _showNameString = false;
+        private bool _showNameAnimation = false;
 
-        private bool _showDragAndDropAttributs = false;
+        private bool _showDragAndDropComponent = false;
         private bool _showGameObjectUI = false;
         private bool _showScript = false;
 
@@ -54,16 +55,23 @@ namespace Editor.Player
             CreatFoldout("Name String", ref _showNameString);
             if (_showNameString)
             {
-                DrawStringField("Run", ref playerController.run);
-                DrawStringField("Ground", ref playerController.ground);
+                EditorGUILayout.BeginHorizontal();
+                GUILayout.Space(10);
+                CreatFoldout("Animation", ref _showNameAnimation);
+                EditorGUILayout.EndHorizontal();
+                if (_showNameAnimation)
+                {
+                    DrawStringField("Run", ref playerController.run);
+                    DrawStringField("Ground", ref playerController.ground);
+                }
             }
 
-            CreatFoldout("Drag And Drop Attributs", ref _showDragAndDropAttributs);
-            if (_showDragAndDropAttributs)
+            CreatFoldout("Drag And Drop Component", ref _showDragAndDropComponent);
+            if (_showDragAndDropComponent)
             {
                 EditorGUILayout.BeginHorizontal();
                 GUILayout.Space(10);
-                CreatFoldout("GameObject UI", ref _showGameObjectUI);
+                CreatFoldout("UI", ref _showGameObjectUI);
                 EditorGUILayout.EndHorizontal();
 
                 if (_showGameObjectUI)
@@ -73,6 +81,7 @@ namespace Editor.Player
                     DrawGameObjectField("Heart 3", ref playerController.heart3);
                     DrawGameObjectField("UI In Game", ref playerController.uiInGame);
                     DrawGameObjectField("UI Game Over", ref playerController.uiGameOver);
+                    DrawGameObjectField("UI Pause Game", ref playerController.uiPauseGame);
                     DrawGameObjectField("Text GameOver", ref playerController.textGameOver);
                     DrawGameObjectField("Text End Level", ref playerController.textEndLevel);
                 }

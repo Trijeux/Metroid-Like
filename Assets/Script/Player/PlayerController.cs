@@ -4,6 +4,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
@@ -18,8 +19,10 @@ namespace Script.Player
         public GameObject heart3;
         public GameObject uiInGame;
         public GameObject uiGameOver;
+        public GameObject uiPauseGame;
         public GameObject textGameOver;
         public GameObject textEndLevel;
+        
         
         public CheckIsGround checkIsGround;
         public Spawn spawn;
@@ -45,6 +48,7 @@ namespace Script.Player
         private float _upDownInput;
         private float _leftRightInput;
         private bool _jumpInput;
+        private bool _exitInput;
         private bool  _pauseInputRelease;
         private bool _isFall = false;
         private bool _isFacingLeft = false;
@@ -72,22 +76,34 @@ namespace Script.Player
 
         private void OnPause(InputValue value)
         {
-            switch (value.isPressed)
+            if (!isEnd)
             {
-                case true when !isPause && !_pauseInputRelease:
-                    _pauseInputRelease = true;
-                    isPause = true;
-                    Time.timeScale = 0;
-                    break;
-                case true when isPause && !_pauseInputRelease:
-                    _pauseInputRelease = true;
-                    isPause = false;
-                    Time.timeScale = 1;
-                    break;
-                case false:
-                    _pauseInputRelease = false;
-                    break;
+                switch (value.isPressed)
+                {
+                    case true when !isPause && !_pauseInputRelease:
+                        _pauseInputRelease = true;
+                        isPause = true;
+                        uiPauseGame.SetActive(true);
+                        uiInGame.SetActive(false);
+                        Time.timeScale = 0;
+                        break;
+                    case true when isPause && !_pauseInputRelease:
+                        _pauseInputRelease = true;
+                        isPause = false;
+                        uiPauseGame.SetActive(false);
+                        uiInGame.SetActive(true);
+                        Time.timeScale = 1;
+                        break;
+                    case false:
+                        _pauseInputRelease = false;
+                        break;
+                }
             }
+        }
+
+        private void OnExitGame(InputValue value)
+        {
+            _exitInput = value.isPressed;
         }
         
         private void RotateToFace()
@@ -109,43 +125,48 @@ namespace Script.Player
 
         private void Update()
         {
-            isHit = dead.isDead;
-            
-            if (isHit)
+            if (!isEnd)
             {
-                life--;
-                switch (life)
+                isHit = dead.isDead;
+            
+                if (isHit)
                 {
-                    case 3:
-                        heart3.SetActive(true);
-                        heart2.SetActive(true);
-                        heart1.SetActive(true);
-                        break;
-                    case 2:
-                        heart3.SetActive(false);
-                        heart2.SetActive(true);
-                        heart1.SetActive(true);
-                        break;
-                    case 1:
-                        heart3.SetActive(false);
-                        heart2.SetActive(false);
-                        heart1.SetActive(true);
-                        break;
-                    case 0:
-                        heart3.SetActive(false);
-                        heart2.SetActive(false);
-                        heart1.SetActive(false);
-                        break;
+                    life--;
+                    switch (life)
+                    {
+                        case 3:
+                            heart3.SetActive(true);
+                            heart2.SetActive(true);
+                            heart1.SetActive(true);
+                            break;
+                        case 2:
+                            heart3.SetActive(false);
+                            heart2.SetActive(true);
+                            heart1.SetActive(true);
+                            break;
+                        case 1:
+                            heart3.SetActive(false);
+                            heart2.SetActive(false);
+                            heart1.SetActive(true);
+                            break;
+                        case 0:
+                            heart3.SetActive(false);
+                            heart2.SetActive(false);
+                            heart1.SetActive(false);
+                            break;
+                    }
                 }
+            
+                if (isHit)
+                {
+                    transform.position = spawn.CheckPoint;
+                    isHit = false;
+                    dead.isDead = false;
+                }
+
+                RotateToFace();
             }
             
-            if (isHit)
-            {
-                transform.position = spawn.CheckPoint;
-                isHit = false;
-                dead.isDead = false;
-            }
-
             if (life <= 0)
             {
                 isEnd = true;
@@ -155,7 +176,17 @@ namespace Script.Player
             {
                 isEnd = finishLevel.IsFinish;
             }
+            
+            
 
+            if (isPause)
+            {
+                if (_exitInput)
+                {
+                    Application.Quit();
+                }
+            }
+            
             if (isEnd)
             {
                 uiInGame.SetActive(false);
@@ -170,8 +201,18 @@ namespace Script.Player
                     textGameOver.SetActive(false);
                     textEndLevel.SetActive(true);
                 }
+
+                if (_jumpInput)
+                {
+                    SceneManager.LoadScene(0);
+                    Canvas.ForceUpdateCanvases();
+                }
+                
+                if (_exitInput)
+                {
+                    Application.Quit();
+                }
             }
-            RotateToFace();
         }
 
         private void FixedUpdate()

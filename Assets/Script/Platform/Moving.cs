@@ -9,8 +9,6 @@ namespace Script.Platform
     {
         #region Attributs
 
-        private Rigidbody2D _rb;
-
         [SerializeField] private string limitMove;
         [SerializeField] private float speedRightLeft = 5f;
         [SerializeField] private float speedUpDown = 5f; 
@@ -25,7 +23,6 @@ namespace Script.Platform
 
         private void Start()
         {
-            _rb = GetComponent<Rigidbody2D>();
         }
 
         private void Update()
@@ -35,7 +32,7 @@ namespace Script.Platform
 
         private void FixedUpdate()
         {
-            _rb.linearVelocity = new Vector2(speedRightLeft, speedUpDown);
+            transform.position += new Vector3(speedRightLeft * Time.deltaTime,speedUpDown * Time.deltaTime);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
