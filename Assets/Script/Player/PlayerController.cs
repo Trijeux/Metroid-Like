@@ -13,36 +13,44 @@ namespace Script.Player
     {
         #region Attributs
 
-        [SerializeField] private GameObject heart1;
-        [SerializeField] private GameObject heart2;
-        [SerializeField] private GameObject heart3;
-        [SerializeField] private GameObject uiInGame;
-        [SerializeField] private GameObject uiGameOver;
-        [SerializeField] private GameObject textGameOver;
-        [SerializeField] private GameObject textEndLevel;
+        public GameObject heart1;
+        public GameObject heart2;
+        public GameObject heart3;
+        public GameObject uiInGame;
+        public GameObject uiGameOver;
+        public GameObject textGameOver;
+        public GameObject textEndLevel;
+        
+        public CheckIsGround checkIsGround;
+        public Spawn spawn;
+        public Dead dead;
+        public KillEnemy killEnemy;
+        public FinishLevel finishLevel;
+        
+        public int life = 3;
+        
+        public float speed = 5f;
+        public float powerJump = 5f;
+        
+        public bool isHit;
+        public bool isEnd;
+        public bool isDead;
+        public bool isPause;
+        
+        public string run;
+        public string ground;
         
         private Rigidbody2D _rb;
-        
-        [SerializeField] private CheckIsGround checkIsGround;
-        [SerializeField] private Spawn spawn;
-        [SerializeField] private Dead dead;
-        [SerializeField] private KillEnemy killEnemy;
-        [SerializeField] private FinishLevel finishLevel;
-
-        [SerializeField] private float speed = 5f;
-        [SerializeField] private float powerJump = 5f;
-        [SerializeField] private bool isDead;
-        [SerializeField] private bool isEnd;
-        [SerializeField] private int life = 3;
-        [SerializeField] private bool isNoLife;
-        [SerializeField] private bool isPause;
-
+        private Animator _animator;
         private float _upDownInput;
         private float _leftRightInput;
         private bool _jumpInput;
         private bool  _pauseInputRelease;
         private bool _isFall = false;
+        private bool _isFacingLeft = false;
 
+       
+        
         #endregion
 
         #region Methods
@@ -82,6 +90,12 @@ namespace Script.Player
             }
         }
         
+        private void RotateToFace()
+        {
+            var rotationY = _isFacingLeft ? 180f : 0f;
+            transform.rotation = Quaternion.Euler(0f, rotationY, 0f);
+        }
+        
         #endregion
 
         #region Behaviors
@@ -89,13 +103,15 @@ namespace Script.Player
         private void Start()
         {
             _rb = GetComponent<Rigidbody2D>();
+            _animator = GetComponent<Animator>();
+            
         }
 
         private void Update()
         {
-            isDead = dead.isDead;
+            isHit = dead.isDead;
             
-            if (isDead)
+            if (isHit)
             {
                 life--;
                 switch (life)
@@ -123,17 +139,17 @@ namespace Script.Player
                 }
             }
             
-            if (isDead)
+            if (isHit)
             {
                 transform.position = spawn.CheckPoint;
-                isDead = false;
+                isHit = false;
                 dead.isDead = false;
             }
 
             if (life <= 0)
             {
                 isEnd = true;
-                isNoLife = true;
+                isDead = true;
             }
             else
             {
@@ -144,7 +160,7 @@ namespace Script.Player
             {
                 uiInGame.SetActive(false);
                 uiGameOver.SetActive(true);
-                if (isNoLife)
+                if (isDead)
                 {
                     textGameOver.SetActive(true);
                     textEndLevel.SetActive(false);
@@ -155,6 +171,7 @@ namespace Script.Player
                     textEndLevel.SetActive(true);
                 }
             }
+            RotateToFace();
         }
 
         private void FixedUpdate()
@@ -163,10 +180,26 @@ namespace Script.Player
             {
                 if (Mathf.Abs(_leftRightInput) > 0.5f)
                 {
+                    if (_leftRightInput > 0.5f)
+                    {
+                        _isFacingLeft = false;
+                    }
+                    else
+                    {
+                        _isFacingLeft = true;
+                    }
+                    if (!_animator.GetBool(run))
+                    {
+                        _animator.SetBool(run, true);
+                    }
                     _rb.linearVelocity = new Vector2(_leftRightInput * speed, _rb.linearVelocity.y);
                 }
                 else
                 {
+                    if (_animator.GetBool(run))
+                    {
+                        _animator.SetBool(run, false);
+                    }
                     _rb.linearVelocity = new Vector2(0, _rb.linearVelocity.y);
                 }
 
@@ -191,10 +224,18 @@ namespace Script.Player
                 {
                     case true:
                         _isFall = false;
+                        if (!_animator.GetBool(ground))
+                        {
+                            _animator.SetBool(ground, true);
+                        }
                         killEnemy.gameObject.SetActive(false);
                         break;
                     case false:
                         _isFall = true;
+                        if (_animator.GetBool(ground))
+                        {
+                            _animator.SetBool(ground, false);
+                        }
                         killEnemy.gameObject.SetActive(true);
                         break;
                 }

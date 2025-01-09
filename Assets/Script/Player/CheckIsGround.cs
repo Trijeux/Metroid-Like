@@ -40,7 +40,7 @@ namespace Script.Player
     
 		private void Start()
 		{
-        
+			IsGround = true;
 		}
 
 		private void Update()

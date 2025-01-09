@@ -20,8 +20,6 @@ namespace Script.Enemy
 		
 		private bool _isFacingLeft = true;
 
-		
-
 		#endregion
 
 		#region Methods
