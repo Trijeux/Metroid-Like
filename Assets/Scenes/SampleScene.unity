@@ -4905,24 +4905,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6419239552554451823, guid: 5107d31619257f4498524ef9043a200c, type: 3}
   m_PrefabInstance: {fileID: 886982473}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &695196398 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5284062891852767926, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
-  m_PrefabInstance: {fileID: 2111503939}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &695196404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 695196398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 224f6176f1adea74090fbaedbe00dd17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  finish: Finish
 --- !u!4 &704605891 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7345061168673067919, guid: c3e7b6be5e1275a498c7501f7909bb8d, type: 3}
@@ -5119,33 +5101,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &754409905 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7240260783430165577, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
-  m_PrefabInstance: {fileID: 2111503939}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &754409906
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 754409905}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8d6f4104ea2c1ad4cbf3dc94809eea7b, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &764900021
 GameObject:
   m_ObjectHideFlags: 0
@@ -89605,7 +89560,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1937914866}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -90943,26 +90898,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 74561193645229151, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
-      propertyPath: m_Size.y
-      value: 1.8290739
-      objectReference: {fileID: 0}
-    - target: {fileID: 74561193645229151, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.3373078
-      objectReference: {fileID: 0}
-    - target: {fileID: 1824139778576461180, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
-      propertyPath: run
-      value: Run
-      objectReference: {fileID: 0}
-    - target: {fileID: 1824139778576461180, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
-      propertyPath: isHit
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1824139778576461180, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
-      propertyPath: ground
-      value: Ground
-      objectReference: {fileID: 0}
     - target: {fileID: 1824139778576461180, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
       propertyPath: heart1
       value: 
@@ -90976,25 +90911,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1966919067}
     - target: {fileID: 1824139778576461180, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
-      propertyPath: animator
-      value: 
-      objectReference: {fileID: 754409906}
-    - target: {fileID: 1824139778576461180, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
       propertyPath: uiInGame
       value: 
       objectReference: {fileID: 2143316304}
     - target: {fileID: 1824139778576461180, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
-      propertyPath: powerJump
-      value: 3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1824139778576461180, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
       propertyPath: uiGameOver
       value: 
       objectReference: {fileID: 1326124588}
-    - target: {fileID: 1824139778576461180, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
-      propertyPath: finishLevel
-      value: 
-      objectReference: {fileID: 695196404}
     - target: {fileID: 1824139778576461180, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
       propertyPath: uiPauseGame
       value: 
@@ -91015,25 +90938,9 @@ PrefabInstance:
       propertyPath: gemGameOver
       value: 
       objectReference: {fileID: 1491797536}
-    - target: {fileID: 2785727825780855363, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
-      propertyPath: textMeshProUGUI
-      value: 
-      objectReference: {fileID: 855040863}
     - target: {fileID: 7240260783430165577, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
       propertyPath: m_Name
       value: Biker_attack1_0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8330782392462289024, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8330782392462289024, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8330782392462289024, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 8330782392462289024, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -91078,13 +90985,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7240260783430165577, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 754409906}
-    - targetCorrespondingSourceObject: {fileID: 5284062891852767926, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
-      insertIndex: 4
-      addedObject: {fileID: 695196404}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 067973fa155a47d4fbe0fb8b20dbc0d8, type: 3}
 --- !u!1 &2112816095
 GameObject:
