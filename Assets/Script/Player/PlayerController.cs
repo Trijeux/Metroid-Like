@@ -37,7 +37,9 @@ namespace Script.Player
         
         [Header("Unity Element")]
         [SerializeField] private CapsuleCollider2D capsuleNoCrunch;
-        [SerializeField] private CapsuleCollider2D capsuleCrunch;
+        [SerializeField] private CircleCollider2D capsuleCrunch;
+        [SerializeField] private CapsuleCollider2D triggerCapsuleNoCrunch;
+        [SerializeField] private CircleCollider2D triggerCapsuleCrunch;
 
         [Header("Payer State")] 
         [SerializeField] private int pv = 0;
@@ -118,7 +120,9 @@ namespace Script.Player
             if (capsuleNoCrunch.enabled && _inputCrunch <= -0.1)
             {
                 capsuleNoCrunch.enabled = false;
+                triggerCapsuleNoCrunch.enabled = false;
                 capsuleCrunch.enabled = true;
+                triggerCapsuleCrunch.enabled = true;
                 _isCrunch = true;
                 _rb.linearVelocity = new Vector2(0, _rb.linearVelocity.y);
             }
@@ -126,7 +130,9 @@ namespace Script.Player
             if (capsuleCrunch.enabled && _inputCrunch >= 0.1)
             {
                 capsuleNoCrunch.enabled = true;
+                triggerCapsuleNoCrunch.enabled = true;
                 capsuleCrunch.enabled = false;
+                triggerCapsuleCrunch.enabled = false;
                 _isCrunch = false;
             }
         }
