@@ -1,23 +1,23 @@
 // Script by : Nanatchy
 // Porject : Metroid Like
 
-using System;
 using UnityEngine;
 
-namespace Script.Item
+namespace Script.Old_Script.Player
 {
-	public class ItemRemove : MonoBehaviour
+	public class KillEnemy : MonoBehaviour
 	{
 		#region Attributs
-
-		[SerializeField] private string pikerItem;
-
+		
+		[SerializeField] private string enemy;
+		
+		public bool isKill;
+		
 		#endregion
 
 		#region Methods
 
-
-
+		
 		#endregion
 
 		#region Behaviors
@@ -34,12 +34,12 @@ namespace Script.Item
 
 		private void OnTriggerEnter2D(Collider2D other)
 		{
-			if (other.CompareTag(pikerItem))
+			if (other.CompareTag(enemy))
 			{
-				Destroy(gameObject);
+				isKill = true;
 			}
 		}
-
+		
 		#endregion
 	}
 }

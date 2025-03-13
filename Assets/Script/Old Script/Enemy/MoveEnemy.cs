@@ -1,10 +1,9 @@
 // Script by : Nanatchy
 // Porject : Metroid Like
 
-using System;
 using UnityEngine;
 
-namespace Script.Enemy
+namespace Script.Old_Script.Enemy
 {
 	public class MoveEnemy : MonoBehaviour
 	{

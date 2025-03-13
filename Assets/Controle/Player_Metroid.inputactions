@@ -1,0 +1,173 @@
+{
+    "name": "Player_Metroid",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "e58910ac-b27f-486a-bbab-4c718c155334",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "00b6abda-5a36-4c15-a588-40b4e99fb2e0",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "cc464fd4-3c45-4cb3-bc74-7e0ca4aaccd7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Crunch",
+                    "type": "Value",
+                    "id": "22765bbf-2c7b-45c7-a238-8a07c813a5a0",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "33f7dabe-4b26-4bdb-9095-5d2fdba78ecb",
+                    "path": "<Gamepad>/leftStick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c1d390c7-942e-4fb1-8d96-3e94e3e7d86b",
+                    "path": "<Gamepad>/dpad/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "AD",
+                    "id": "18a49140-2f03-4195-8ffb-d297bbc5992f",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "fe439afe-1cdb-455b-9b57-19a785cd2b66",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "1be8563a-6a29-4df4-a621-69e24937054e",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "d4366e10-e1f7-4faf-8e5f-a6725529292f",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "75ef6c82-c06b-4c5d-9f1b-1c0d2774b728",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d84ec63f-b160-4c3a-b4ad-18e6724ec828",
+                    "path": "<Gamepad>/leftStick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Crunch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "64e15722-730d-4cc6-a8b9-69c0f8876985",
+                    "path": "<Gamepad>/dpad/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Crunch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "WS",
+                    "id": "fe84bd95-af4c-42a1-b274-67f78c334399",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Crunch",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "76389bc1-6ced-4e30-bebe-c9b2e45f8ef0",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Crunch",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "0b9476fc-7e94-48aa-9abb-2aa14d16d9e5",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Crunch",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

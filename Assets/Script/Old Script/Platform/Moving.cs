@@ -3,7 +3,7 @@
 
 using UnityEngine;
 
-namespace Script.Platform
+namespace Script.Old_Script.Platform
 {
     public class Moving : MonoBehaviour
     {

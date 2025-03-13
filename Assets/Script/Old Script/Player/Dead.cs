@@ -2,9 +2,8 @@
 // Porject : Metroid Like
 
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Script.Player
+namespace Script.Old_Script.Player
 {
 	public class Dead : MonoBehaviour
 	{

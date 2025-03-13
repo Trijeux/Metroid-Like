@@ -3,7 +3,7 @@
 
 using UnityEngine;
 
-namespace Script.Player
+namespace Script.Old_Script.Player
 {
 	public class Spawn : MonoBehaviour
 	{

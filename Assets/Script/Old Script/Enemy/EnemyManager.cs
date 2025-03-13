@@ -3,11 +3,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Script.Enemy
+namespace Script.Old_Script.Enemy
 {
     public class EnemyManager : MonoBehaviour
     {

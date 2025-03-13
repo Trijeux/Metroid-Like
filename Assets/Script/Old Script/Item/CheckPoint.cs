@@ -2,9 +2,8 @@
 // Porject : Metroid Like
 
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Script.Item
+namespace Script.Old_Script.Item
 {
 	public class CheckPoint : MonoBehaviour
 	{

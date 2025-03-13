@@ -3,21 +3,20 @@
 
 using UnityEngine;
 
-namespace Script.Player
+namespace Script.Old_Script.Item
 {
-	public class KillEnemy : MonoBehaviour
+	public class ItemRemove : MonoBehaviour
 	{
 		#region Attributs
-		
-		[SerializeField] private string enemy;
-		
-		public bool isKill;
-		
+
+		[SerializeField] private string pikerItem;
+
 		#endregion
 
 		#region Methods
 
-		
+
+
 		#endregion
 
 		#region Behaviors
@@ -34,12 +33,12 @@ namespace Script.Player
 
 		private void OnTriggerEnter2D(Collider2D other)
 		{
-			if (other.CompareTag(enemy))
+			if (other.CompareTag(pikerItem))
 			{
-				isKill = true;
+				Destroy(gameObject);
 			}
 		}
-		
+
 		#endregion
 	}
 }

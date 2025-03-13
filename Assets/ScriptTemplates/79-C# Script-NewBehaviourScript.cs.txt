@@ -19,9 +19,15 @@ public class #SCRIPTNAME# : MonoBehaviour
 
     #endregion
 
+    #region InputSystem
+
+
+
+    #endregion
+
     #region Behaviors
 
-	private void Start()
+    private void Start()
     {
         #NOTRIM#
     }

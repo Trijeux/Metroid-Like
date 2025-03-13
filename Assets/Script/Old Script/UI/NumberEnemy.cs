@@ -1,12 +1,11 @@
 // Script by : Nanatchy
 // Porject : Metroid Like
 
-using Script.Enemy;
+using Script.Old_Script.Enemy;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Script.UI
+namespace Script.Old_Script.UI
 {
     public class NumberEnemy : MonoBehaviour
     {
