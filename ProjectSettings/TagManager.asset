@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Enemy
   - Item
+  - Gem
   layers:
   - Default
   - TransparentFX
@@ -43,6 +44,18 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Hand Left
+    uniqueID: 3637845267
+    locked: 0
+  - name: Player
+    uniqueID: 873242681
+    locked: 0
+  - name: Weapon
+    uniqueID: 2811792781
+    locked: 0
+  - name: Hand Right
+    uniqueID: 1560864597
     locked: 0
   m_RenderingLayers:
   - Default

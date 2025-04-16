@@ -1,11 +1,13 @@
 // Script by : Nanatchy
 // Porject : Metroid Like
 
+using System;
 using System.Collections.Generic;
 using Script.My_Tool_Script;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace Script.Player
 {
@@ -32,14 +34,32 @@ namespace Script.Player
         //Input
         private float _inputMove = 0;
         private bool _inputJump = false;
-        private float _inputCrunch = 0;
+        private float _inputUpDown = 0;
         
+        //Rotation
+        private bool _isFacingLeft = false;
+        
+        //Aim Direction & Hands
+        private enum DirectionAim
+        {
+            Up = 0,
+            MidleUp = 1,
+            Midle = 2,
+            MidleDown = 3,
+            Down = 4
+        }
+        private DirectionAim _directionAim;
+        private Vector3 _handsNoCrunch = new Vector3(0,0,0);
         
         [Header("Unity Element")]
         [SerializeField] private CapsuleCollider2D capsuleNoCrunch;
         [SerializeField] private CircleCollider2D capsuleCrunch;
         [SerializeField] private CapsuleCollider2D triggerCapsuleNoCrunch;
         [SerializeField] private CircleCollider2D triggerCapsuleCrunch;
+        [SerializeField] private Animator animatorPlayer;
+        [SerializeField] private GameObject allHands;
+        [SerializeField] private Vector3 handsCrunch;
+        [SerializeField] private List<GameObject> hands;
 
         [Header("Payer State")] 
         [SerializeField] private int pv = 0;
@@ -55,9 +75,69 @@ namespace Script.Player
 
         #region Methods
         
+        public void AnimEventWeaponCrunch()
+        {
+            if (_isCrunch)
+            {
+                allHands.transform.localPosition = handsCrunch;
+            }
+            else
+            {
+                allHands.transform.localPosition = _handsNoCrunch;
+            }
+        }
+        
         private void PlayerMove()
         {
             _rb.linearVelocity = new Vector2(_inputMove * speed, _rb.linearVelocity.y);
+        }
+
+        private void UpdateRotationPlayer()
+        {
+            if (Mathf.Abs(_inputMove) > 0.5f)
+            {
+                if (_inputMove > 0.5f)
+                {
+                    _isFacingLeft = false;
+                }
+                else
+                {
+                    _isFacingLeft = true;
+                }
+            }
+            
+            var rotationY = _isFacingLeft ? 180f : 0f;
+            transform.rotation = Quaternion.Euler(0f, rotationY, 0f);
+        }
+
+        private void UpdateAimDirection()
+        {
+            var currentDirectionAim = _directionAim;
+            if (_inputUpDown >= 0.1 && Mathf.Abs(_inputMove) > 0.5f)
+            {
+                _directionAim = DirectionAim.MidleUp;
+            }
+            else if (_inputUpDown >= 0.1 && !_isCrunch)
+            {
+                _directionAim = DirectionAim.Up;
+            }
+            else if (_inputUpDown <= -0.1 && Mathf.Abs(_inputMove) > 0.5f)
+            {
+                _directionAim = DirectionAim.MidleDown;
+            }
+            else if (_inputUpDown <= -0.1 && _isFall)
+            {
+                _directionAim = DirectionAim.Down;
+            }
+            else
+            {
+                _directionAim = DirectionAim.Midle;
+            }
+            if (_directionAim != currentDirectionAim)
+            {
+                hands[currentDirectionAim.GetHashCode()].SetActive(false);
+                hands[_directionAim.GetHashCode()].SetActive(true);
+            }
         }
 
         private void PlayerJump()
@@ -117,7 +197,17 @@ namespace Script.Player
 
         private void PlayerCrunch()
         {
-            if (capsuleNoCrunch.enabled && _inputCrunch <= -0.1)
+            if (Mathf.Abs(_inputMove) > 0.5f && capsuleCrunch.enabled 
+                || capsuleCrunch.enabled && _inputUpDown >= 0.1 
+                || _inputJump && capsuleCrunch.enabled)
+            {
+                capsuleNoCrunch.enabled = true;
+                triggerCapsuleNoCrunch.enabled = true;
+                capsuleCrunch.enabled = false;
+                triggerCapsuleCrunch.enabled = false;
+                _isCrunch = false;
+            }
+            else if (Mathf.Abs(_inputMove) < 0.1f && capsuleNoCrunch.enabled && _inputUpDown <= -0.1)
             {
                 capsuleNoCrunch.enabled = false;
                 triggerCapsuleNoCrunch.enabled = false;
@@ -125,15 +215,6 @@ namespace Script.Player
                 triggerCapsuleCrunch.enabled = true;
                 _isCrunch = true;
                 _rb.linearVelocity = new Vector2(0, _rb.linearVelocity.y);
-            }
-
-            if (capsuleCrunch.enabled && _inputCrunch >= 0.1)
-            {
-                capsuleNoCrunch.enabled = true;
-                triggerCapsuleNoCrunch.enabled = true;
-                capsuleCrunch.enabled = false;
-                triggerCapsuleCrunch.enabled = false;
-                _isCrunch = false;
             }
         }
 
@@ -169,9 +250,9 @@ namespace Script.Player
             _inputJump = value.isPressed;
         }
 
-        private void OnCrunch(InputValue value)
+        private void OnUpDown(InputValue value)
         {
-            _inputCrunch = value.Get<float>();
+            _inputUpDown = value.Get<float>();
         }
 
         #endregion
@@ -183,24 +264,25 @@ namespace Script.Player
             _rb = transform.MyGetComponentObject<Rigidbody2D>();
             _checkIsGround = transform.MyGetComponentObject<CheckIsGround>();
             _triggerPlayer = transform.MyGetComponentObject<TrigerCollidePlayer>();
+            _handsNoCrunch = allHands.transform.localPosition;
         }
 
         private void FixedUpdate()
         {
+            animatorPlayer.SetBool("IsCrunch", _isCrunch);
             AddDamage();
             CheckLife();
+            UpdateRotationPlayer();
+            UpdateAimDirection();
             if (!isDead)
             {
                 PlayerIsGround();
-                if (!_isCrunch)
-                {
-                    PlayerMove();
-                    PlayerJump();
-                }
                 if (!_isFall)
                 {
                     PlayerCrunch();
                 }
+                PlayerMove();
+                PlayerJump();
             }
         }
 
