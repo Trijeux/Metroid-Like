@@ -35,12 +35,13 @@ namespace Script.Player
         private float _inputMove = 0;
         private bool _inputJump = false;
         private float _inputUpDown = 0;
+        private bool _inputDontMove = false;
         
         //Rotation
         private bool _isFacingLeft = false;
         
         //Aim Direction & Hands
-        private enum DirectionAim
+        private enum DirectionAimEnum
         {
             Up = 0,
             MidleUp = 1,
@@ -48,7 +49,9 @@ namespace Script.Player
             MidleDown = 3,
             Down = 4
         }
-        private DirectionAim _directionAim;
+        private DirectionAimEnum _directionAim;
+        public int DirectionAim => _directionAim.GetHashCode();
+        
         private Vector3 _handsNoCrunch = new Vector3(0,0,0);
         
         [Header("Unity Element")]
@@ -57,7 +60,6 @@ namespace Script.Player
         [SerializeField] private CapsuleCollider2D triggerCapsuleNoCrunch;
         [SerializeField] private CircleCollider2D triggerCapsuleCrunch;
         [SerializeField] private Animator animatorPlayer;
-        [SerializeField] private GameObject allHands;
         [SerializeField] private Vector3 handsCrunch;
         [SerializeField] private List<GameObject> hands;
 
@@ -70,22 +72,13 @@ namespace Script.Player
         
         [Header("Power")]
         [SerializeField] private bool isPowerDoubleJump = false;
-        
+        [SerializeField] private bool isPowerRocket = false;
+
+        public bool IsPowerRocket => isPowerRocket;
+
         #endregion
 
         #region Methods
-        
-        public void AnimEventWeaponCrunch()
-        {
-            if (_isCrunch)
-            {
-                allHands.transform.localPosition = handsCrunch;
-            }
-            else
-            {
-                allHands.transform.localPosition = _handsNoCrunch;
-            }
-        }
         
         private void PlayerMove()
         {
@@ -115,23 +108,23 @@ namespace Script.Player
             var currentDirectionAim = _directionAim;
             if (_inputUpDown >= 0.1 && Mathf.Abs(_inputMove) > 0.5f)
             {
-                _directionAim = DirectionAim.MidleUp;
+                _directionAim = DirectionAimEnum.MidleUp;
             }
             else if (_inputUpDown >= 0.1 && !_isCrunch)
             {
-                _directionAim = DirectionAim.Up;
+                _directionAim = DirectionAimEnum.Up;
             }
             else if (_inputUpDown <= -0.1 && Mathf.Abs(_inputMove) > 0.5f)
             {
-                _directionAim = DirectionAim.MidleDown;
+                _directionAim = DirectionAimEnum.MidleDown;
             }
             else if (_inputUpDown <= -0.1 && _isFall)
             {
-                _directionAim = DirectionAim.Down;
+                _directionAim = DirectionAimEnum.Down;
             }
             else
             {
-                _directionAim = DirectionAim.Midle;
+                _directionAim = DirectionAimEnum.Midle;
             }
             if (_directionAim != currentDirectionAim)
             {
@@ -255,6 +248,11 @@ namespace Script.Player
             _inputUpDown = value.Get<float>();
         }
 
+        private void OnDontMove(InputValue value)
+        {
+            _inputDontMove = value.isPressed;
+        }
+
         #endregion
 
         #region Behaviors
@@ -264,7 +262,6 @@ namespace Script.Player
             _rb = transform.MyGetComponentObject<Rigidbody2D>();
             _checkIsGround = transform.MyGetComponentObject<CheckIsGround>();
             _triggerPlayer = transform.MyGetComponentObject<TrigerCollidePlayer>();
-            _handsNoCrunch = allHands.transform.localPosition;
         }
 
         private void FixedUpdate()
@@ -281,8 +278,19 @@ namespace Script.Player
                 {
                     PlayerCrunch();
                 }
-                PlayerMove();
-                PlayerJump();
+                if (!_inputDontMove)
+                {
+                    PlayerMove();
+                    PlayerJump();
+                }
+                else
+                {
+                    _rb.linearVelocity = new Vector2(0, _rb.linearVelocity.y);
+                }
+            }
+            else
+            {
+                _rb.linearVelocity = new Vector2(0, _rb.linearVelocity.y);
             }
         }
 
